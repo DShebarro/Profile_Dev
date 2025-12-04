@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portifólio Profissional - Davy Shebarro</title>
+
+    <!-- Bibliotecas Tailwinds -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-200">
+
+    <nav class="fixed w-full top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex items-center justify-between h-16">
+
+                <a href="#home" class="font-bold text-2xl bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+                    DevProfile.
+                </a>
+
+                <!-- Desktop -->
+                <div class="hidden md:flex gap-8">
+                    <a href="#sobre" class="nav-link">Sobre</a>
+                    <a href="#skills" class="nav-link">Skills</a>
+                    <a href="#projetos" class="nav-link">Projetos</a>
+                    <a href="#contato" class="nav-link">Contato</a>
+                </div>
+
+                <!-- Mobile -->
+                <button id="mobile-menu-btn" class="md:hidden text-slate-300">
+                    <i data-lucide="menu"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- MOBILE DROPDOWN -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 p-3 border-b border-slate-800">
+            <a href="#sobre" class="mobile-nav-link">Sobre</a>
+            <a href="#skills" class="mobile-nav-link">Skills</a>
+            <a href="#projetos" class="mobile-nav-link">Projetos</a>
+            <a href="#contato" class="mobile-nav-link">Contato</a>
+        </div>
+    </nav>
+    
+</body>
+</html>
