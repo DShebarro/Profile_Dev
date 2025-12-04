@@ -1,49 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portifólio Profissional - Davy Shebarro</title>
 
     <!-- Bibliotecas Tailwinds -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
 
-</head>
-<body class="min-h-screen bg-slate-950 text-slate-200">
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="min-h-screen bg-slate-950 text-slate-200">
+    <nav
+      class="fixed w-full top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800"
+    >
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="flex items-center justify-between h-16">
+          <a
+            href="#home"
+            class="font-bold text-2xl bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent"
+          >
+            DevProfile.
+          </a>
 
-    <nav class="fixed w-full top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="flex items-center justify-between h-16">
+          <!-- Desktop -->
+          <div class="hidden md:flex gap-8">
+            <a href="#sobre" class="nav-link">Sobre</a>
+            <a href="#skills" class="nav-link">Skills</a>
+            <a href="#projetos" class="nav-link">Projetos</a>
+            <a href="#contato" class="nav-link">Contato</a>
+          </div>
 
-                <a href="#home" class="font-bold text-2xl bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                    DevProfile.
-                </a>
-
-                <!-- Desktop -->
-                <div class="hidden md:flex gap-8">
-                    <a href="#sobre" class="nav-link">Sobre</a>
-                    <a href="#skills" class="nav-link">Skills</a>
-                    <a href="#projetos" class="nav-link">Projetos</a>
-                    <a href="#contato" class="nav-link">Contato</a>
-                </div>
-
-                <!-- Mobile -->
-                <button id="mobile-menu-btn" class="md:hidden text-slate-300">
-                    <i data-lucide="menu"></i>
-                </button>
-            </div>
+          <!-- Mobile -->
+          <button id="mobile-menu-btn" class="md:hidden text-slate-300">
+            <i data-lucide="menu"></i>
+          </button>
         </div>
+      </div>
 
-        <!-- MOBILE DROPDOWN -->
-        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 p-3 border-b border-slate-800">
-            <a href="#sobre" class="mobile-nav-link">Sobre</a>
-            <a href="#skills" class="mobile-nav-link">Skills</a>
-            <a href="#projetos" class="mobile-nav-link">Projetos</a>
-            <a href="#contato" class="mobile-nav-link">Contato</a>
-        </div>
+      <!-- MOBILE DROPDOWN -->
+      <div
+        id="mobile-menu"
+        class="hidden md:hidden bg-slate-900 p-3 border-b border-slate-800"
+      >
+        <a href="#sobre" class="mobile-nav-link">Sobre</a>
+        <a href="#skills" class="mobile-nav-link">Skills</a>
+        <a href="#projetos" class="mobile-nav-link">Projetos</a>
+        <a href="#contato" class="mobile-nav-link">Contato</a>
+      </div>
     </nav>
-    
-</body>
+
+    <!-- HERO -->
+    <section id="home" class="pt-32 pb-24 px-6 text-center">
+      <div class="max-w-5xl mx-auto">
+        <span class="tag">Disponível para novos projetos</span>
+
+        <h1 class="hero-title">
+          Olá, eu sou <br />
+          <span id="profile-name" class="gradient-text"></span>
+        </h1>
+
+        <p id="profile-tagline" class="hero-subtitle"></p>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-4 mt-10">
+          <a href="#contato" class="btn-primary">
+            <i data-lucide="mail"></i> Entrar em Contato
+          </a>
+
+          <a href="#projetos" class="btn-secondary">
+            Ver Projetos <i data-lucide="chevron-down"></i>
+          </a>
+        </div>
+
+        <!-- Social -->
+        <div class="flex justify-center gap-6 mt-10">
+          <a id="github" target="_blank" class="social"
+            ><i data-lucide="github"></i
+          ></a>
+          <a id="linkedin" target="_blank" class="social"
+            ><i data-lucide="linkedin"></i
+          ></a>
+          <a id="mail" class="social"><i data-lucide="mail"></i></a>
+        </div>
+      </div>
+    </section>
+  </body>
 </html>
