@@ -1,13 +1,13 @@
 const profile = {
-  name: "Seu Nome",
-  role: "Desenvolvedor Full Stack",
+  name: "Davy Shebarro",
+  role: "Desenvolvedor Front-End",
   tagline: "Transformando ideias em experiências digitais.",
   description:
-    "Sou um desenvolvedor com 5+ anos de experiência criando produtos digitais escaláveis.",
+    "Sou um desenvolvedor com 1 ano e meio de experiência criando projetos digitais escaláveis.",
   social: {
-    github: "https://github.com/seuuser",
-    linkedin: "https://linkedin.com/in/seulinkedin",
-    email: "mailto:email@exemplo.com",
+    github: "https://github.com/DShebarro",
+    linkedin: "https://www.linkedin.com/in/davyshebarro/",
+    email: "",
   },
 };
 
@@ -15,12 +15,17 @@ const skills = [
   {
     category: "Frontend",
     icon: "code-2",
-    items: ["React", "TypeScript", "Tailwind", "Next.js"],
+    items: ["HTML", "CSS", "JavaScript", "React", "TypeScript", "Tailwind"],
   },
   {
     category: "Backend",
     icon: "server",
-    items: ["Node.js", "Express", "Python", "PostgreSQL"],
+    items: ["Node.js", "PHP", "Python", "PostgreSQL"],
+  },
+  {
+    category: "Ferramentas & Outros",
+    icon: "cpu",
+    items: ["Git/GitHub", "Figma", "Agile/Scrum", "WordPress"],
   },
 ];
 

@@ -63,7 +63,6 @@ body {
   color: #34d399;
 }
 
-
 .hero-title {
   font-size: 3rem;
   font-weight: 800;
@@ -112,8 +111,8 @@ body {
   color: white;
 }
 
-form.form input,
-form.form textarea {
+.form input,
+.form textarea {
   width: 100%;
   padding: 14px;
   background: #0f172a;
