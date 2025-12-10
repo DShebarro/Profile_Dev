@@ -35,7 +35,7 @@ const projects = [
     title: "Pesquisa Interligente com IA",
     desc: "Aplicação Single Page (SPA) - Pesquisa em tempo real com IA e Busca de Dado com API.",
     techs: ["JavaScript(ES6+)", "HTML5", "Taiwlwind CSS", "Gemini API"],
-    image: "https://placehold.co/600x400",
+    image: "./assets/dev-profile-design.png",
     liveLink: "#",
     repoLink: "#",
   },
