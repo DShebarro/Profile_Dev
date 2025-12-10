@@ -78,7 +78,7 @@ body {
 
 .gradient-text {
   background: linear-gradient(to right, #34d399, #22d3ee);
-  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -132,4 +132,26 @@ body {
 
 .hidden {
   display: none;
+}
+
+footer.footer {
+    background-color: #020617; /* slate-950 */
+    padding: 2rem 1rem;
+    border-top: 1px solid #0f172a; /* slate-900 */
+    text-align: center;
+}
+
+footer.footer p {
+    color: #64748b; /* slate-500 */
+    font-size: 0.875rem; /* text-sm */
+}
+
+.footer-tech {
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    color: #475569; /* slate-600 */
+    font-size: 0.75rem; /* text-xs */
 }
