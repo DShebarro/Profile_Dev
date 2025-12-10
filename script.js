@@ -2,7 +2,10 @@ document.addEventListener("DOMContentLoaded", () => {
   lucide.createIcons();
 
   // YEAR
-  document.getElementById("year").textContent = new Date().getFullYear();
+  // document.getElementById("year").textContent = new Date().getFullYear();
+  // Atualiza o ano automaticamente
+  document.getElementById("current-year").textContent =
+    new Date().getFullYear();
 
   // PROFILE
   document.getElementById("profile-name").textContent = profile.name;
@@ -15,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("github").href = profile.social.github;
   document.getElementById("linkedin").href = profile.social.linkedin;
   document.getElementById("mail").href = profile.social.email;
+  document.getElementById("instagram").href = profile.social.instagram;
 
   // SKILLS
   function renderSkills() {
@@ -61,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <h3 class="text-xl font-bold">${p.title}</h3>
                         <p class="text-slate-400 text-sm mt-2">${p.desc}</p>
 
-                        <div class="flex gap-2 mt-4">
+                        <div class="flex flex-wrap gap-2 mt-4">
                             ${p.techs
                               .map(
                                 (t) =>
