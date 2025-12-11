@@ -39,4 +39,20 @@ const projects = [
     liveLink: "#",
     repoLink: "#",
   },
+  {
+    title: "Gerenciador de Links",
+    desc: "Aplicação Single Page (SPA) - Pesquisa em tempo real com IA e Busca de Dado com API.",
+    techs: ["JavaScript(ES6+)", "HTML5", "Taiwlwind CSS", "Gemini API"],
+    image: "./assets/dev-profile-design.png",
+    liveLink: "#",
+    repoLink: "#",
+  },
+  {
+    title: "Cadastro de Produtos - Automação ",
+    desc: "Aplicação Single Page (SPA) - Pesquisa em tempo real com IA e Busca de Dado com API.",
+    techs: ["JavaScript(ES6+)", "HTML5", "Taiwlwind CSS", "Gemini API"],
+    image: "./assets/dev-profile-design.png",
+    liveLink: "#",
+    repoLink: "#",
+  },
 ];
