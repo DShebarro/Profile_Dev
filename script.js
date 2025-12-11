@@ -129,4 +129,20 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => success.classList.add("hidden"), 3000);
     }, 1500);
   });
+
+  // VIEW COUNTER
+  function updateViewCounter() {
+    // Usamos o seu nome de usuário do GitHub para criar uma chave única para o contador.
+    const namespace = "d-shebarro-portfolio";
+    const key = "site-views";
+    const counterElement = document.getElementById("view-counter");
+
+    fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
+      .then((res) => res.json())
+      .then((data) => {
+        counterElement.textContent = data.value;
+      })
+      .catch(() => (counterElement.textContent = "N/A"));
+  }
+  updateViewCounter();
 });
