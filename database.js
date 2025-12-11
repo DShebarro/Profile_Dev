@@ -42,7 +42,7 @@ const projects = [
   {
     title: "Gerenciador de Links",
     desc: "Aplicação Single Page (SPA) - Pesquisa em tempo real com IA e Busca de Dado com API.",
-    techs: ["EXPO", "React Native", "NodeJs", "TypeScript"],
+    techs: ["EXPO", "React Native", "TypeScript"],
     image: "./assets/gerenciador-de-link.png",
     liveLink: "#",
     repoLink: "#",
@@ -50,7 +50,7 @@ const projects = [
   {
     title: "Cadastro de Produtos - Automação ",
     desc: "Aplicação Single Page (SPA) - Pesquisa em tempo real com IA e Busca de Dado com API.",
-    techs: ["JavaScript(ES6+)", "HTML5", "Taiwlwind CSS", "Gemini API"],
+    techs: ["Python", "Pandas", "PyAutoGui"],
     image: "./assets/cadastro-de-produtos-automacao.png",
     liveLink: "#",
     repoLink: "#",
