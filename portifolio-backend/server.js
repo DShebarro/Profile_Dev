@@ -1,20 +1,19 @@
-const express = require("express");
-const { Pool } = require("pg");
-require("dotenv").config();
-const cors = require("cors");
+const express = require('express');
+const { Pool } = require('pg');
+require('dotenv').config();
+const cors = require('cors');
 
 const app = express();
 
 // Middleware
 app.use(express.json());
-app,
-  use(
-    cors({
-      origin: process.env.FRONTEND_URL || "*",
-      methods: ["GET", "POST", "DELETE"],
-      credentials: true,
-    })
-  );
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || '*',
+    methods: ['GET', 'POST', 'DELETE'],
+    credentials: true,
+  })
+);
 
 // Conexão com PostgreSQL
 const pool = new Pool({
@@ -25,72 +24,115 @@ const pool = new Pool({
   password: process.env.DB_PASSWORD,
 });
 
-pool.on("erro", (err) =>
-  console.error("Erro na conexão com Banco de Dados:", err)
-);
-
-// ROTAS
-
-// health check - 1°
-
-app.get("/api/health", (req, res) => {
-  res.json({ status: "Backend Rodando..." });
+pool.on('error', (err) => {
+  console.error('❌ Erro inesperado na conexão com BD:', err);
 });
 
-// Salva a mensagem - 2°
+// 1. Health Check
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: '✅ Backend rodando!',
+    timestamp: new Date(),
+  });
+});
 
-app.post("/api/messages", async (req, res) => {
+// 2. Salvar mensagem
+app.post('/api/messages', async (req, res) => {
   try {
     const { name, email, message } = req.body;
 
-    //Validação
-    if (!name || !email || !message) {
-      return res
-        .status(400)
-        .json({ error: "Todos os campos são obrigatórios" });
+    if (!name || !name.trim()) {
+      return res.status(400).json({ error: 'Nome é obrigatório' });
+    }
+    if (!email || !email.trim()) {
+      return res.status(400).json({ error: 'Email é obrigatório' });
+    }
+    if (!message || !message.trim()) {
+      return res.status(400).json({ error: 'Mensagem é obrigatória' });
     }
 
-    // Inserir no banco
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: 'Email inválido' });
+    }
+
     const result = await pool.query(
-      "INSERT INTO messages (name, email, message) VALUES ($1, $2, $3) RETURNING id, created_at",
-      [name, email, message]
+      'INSERT INTO messages (name, email, message) VALUES ($1, $2, $3) RETURNING id, created_at',
+      [name.trim(), email.trim(), message.trim()]
     );
 
     res.status(201).json({
       success: true,
-      message: "Mensagem salva com sucesso!",
-      data: result.rows,
+      message: 'Mensagem salva com sucesso!',
+      data: {
+        id: result.rows[0].id,
+        created_at: result.rows[0].created_at,
+      },
     });
   } catch (error) {
-    console.error("Erro ao salvar mensagem", error);
-    res.status(500).json({ error: "Erro aos salvar mensagem" });
+    console.error('❌ Erro ao salvar mensagem:', error);
+    res
+      .status(500)
+      .json({ error: 'Erro ao salvar mensagem. Tente novamente.' });
   }
 });
 
-// 3. Listar todas as mensagens (Para a minha visualização)
-app.get('/api/message', async (req, res) => {
-    try {
-        const result = await pool.query('SELECT * FROM messages ORDER BY created_at DESC' );
-        res.json(result.rows);
-    } catch (error) {
-        console.error('Erro ao buscar mensagens:', error);
-        res.status(500).json({ error: 'Erro ao salvar mensagem' });
-    }
+// 3. Listar mensagens (opcional, para você ver)
+app.get('/api/messages', async (req, res) => {
+  try {
+    const result = await pool.query(
+      'SELECT id, name, email, message, created_at FROM messages ORDER BY created_at DESC'
+    );
+    res.json({
+      total: result.rows.length,
+      messages: result.rows,
+    });
+  } catch (error) {
+    console.error('❌ Erro ao buscar mensagens:', error);
+    res.status(500).json({ error: 'Erro ao buscar mensagens' });
+  }
 });
 
-// 4. Deletar mensagem
-app.get('/api/messages:id', async (req, res) => {
-    try {
-        const { id } = req.params;
-        await pool.query('DELETE FROM message WHERE id = $1', [id]);
-        res.json({ success: true, message: 'Mensagem deletada' });
-    } catch (error) {
-        res.status(500).json({ error: 'Erro ao deletar' });
+// 4. Deletar mensagem (opcional)
+app.delete('/api/messages/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id || isNaN(id)) {
+      return res.status(400).json({ error: 'ID inválido' });
     }
+
+    const result = await pool.query(
+      'DELETE FROM messages WHERE id = $1 RETURNING id',
+      [id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Mensagem não encontrada' });
+    }
+
+    res.json({
+      success: true,
+      message: 'Mensagem deletada com sucesso',
+      deletedId: id,
+    });
+  } catch (error) {
+    console.error('❌ Erro ao deletar mensagem:', error);
+    res.status(500).json({ error: 'Erro ao deletar mensagem' });
+  }
 });
 
-// Inicia o servidor
+// 404
+app.use((req, res) => {
+  res.status(404).json({ error: 'Rota não encontrada' });
+});
+
+// Iniciar servidor
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(` Servidor rodando em http://localhost:${PORT}`);
+  console.log('\n🚀 ===================================');
+  console.log(`✅ Servidor rodando em http://localhost:${PORT}`);
+  console.log(`📊 Banco de dados: ${process.env.DB_NAME}`);
+  console.log(`🌐 CORS habilitado para: ${process.env.FRONTEND_URL}`);
+  console.log('===================================\n');
 });

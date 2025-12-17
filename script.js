@@ -1,9 +1,11 @@
+// Em DEV: backend local. Em produção troque pela URL do Render.
+const API_BASE_URL = "http://localhost:5000";
+// ex. produção: const API_BASE_URL = "https://seu-backend.onrender.com";
+
 document.addEventListener("DOMContentLoaded", () => {
   lucide.createIcons();
 
   // YEAR
-  // document.getElementById("year").textContent = new Date().getFullYear();
-  // Atualiza o ano automaticamente
   document.getElementById("current-year").textContent =
     new Date().getFullYear();
 
@@ -27,22 +29,22 @@ document.addEventListener("DOMContentLoaded", () => {
     container.innerHTML = skills
       .map(
         (s) => `
-                <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 hover:border-emerald-400 transition">
-                    <div class="flex items-center gap-3 text-emerald-400 mb-4">
-                        <i data-lucide="${s.icon}"></i>
-                        <h3 class="text-xl font-semibold">${s.category}</h3>
-                    </div>
+          <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 hover:border-emerald-400 transition">
+            <div class="flex items-center gap-3 text-emerald-400 mb-4">
+              <i data-lucide="${s.icon}"></i>
+              <h3 class="text-xl font-semibold">${s.category}</h3>
+            </div>
 
-                    <div class="flex flex-wrap gap-2">
-                        ${s.items
-                          .map(
-                            (item) =>
-                              `<span class="px-3 py-1 bg-slate-900 border border-slate-700 rounded-full text-sm">${item}</span>`
-                          )
-                          .join("")}
-                    </div>
-                </div>
-            `
+            <div class="flex flex-wrap gap-2">
+              ${s.items
+                .map(
+                  (item) =>
+                    `<span class="px-3 py-1 bg-slate-900 border border-slate-700 rounded-full text-sm">${item}</span>`
+                )
+                .join("")}
+            </div>
+          </div>
+        `
       )
       .join("");
 
@@ -58,33 +60,29 @@ document.addEventListener("DOMContentLoaded", () => {
     container.innerHTML = projects
       .map(
         (p) => `
-                <div class="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden hover:border-emerald-400 transition">
-                    <img src="${p.image}" class="w-full h-48 object-cover">
+          <div class="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden hover:border-emerald-400 transition">
+            <img src="${p.image}" class="w-full h-48 object-cover">
 
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold">${p.title}</h3>
-                        <p class="text-slate-400 text-sm mt-2">${p.desc}</p>
+            <div class="p-6">
+              <h3 class="text-xl font-bold">${p.title}</h3>
+              <p class="text-slate-400 text-sm mt-2">${p.desc}</p>
 
-                        <div class="flex flex-wrap gap-2 mt-4">
-                            ${p.techs
-                              .map(
-                                (t) =>
-                                  `<span class="text-xs px-2 py-1 bg-emerald-900/30 text-emerald-400 rounded">${t}</span>`
-                              )
-                              .join("")}
-                        </div>
+              <div class="flex flex-wrap gap-2 mt-4">
+                ${p.techs
+                  .map(
+                    (t) =>
+                      `<span class="text-xs px-2 py-1 bg-emerald-900/30 text-emerald-400 rounded">${t}</span>`
+                  )
+                  .join("")}
+              </div>
 
-                        <div class="flex gap-4 mt-4">
-                            <a href="${
-                              p.liveLink
-                            }" class="text-slate-300 hover:text-white">Demo</a>
-                            <a href="${
-                              p.repoLink
-                            }" class="text-slate-300 hover:text-white">Código</a>
-                        </div>
-                    </div>
-                </div>
-            `
+              <div class="flex gap-4 mt-4">
+                <a href="${p.liveLink}" class="text-slate-300 hover:text-white">Demo</a>
+                <a href="${p.repoLink}" class="text-slate-300 hover:text-white">Código</a>
+              </div>
+            </div>
+          </div>
+        `
       )
       .join("");
 
@@ -106,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
     lucide.createIcons();
   });
 
-  // FORMS
+  // FORM CONTATO + BACKEND
   const form = document.getElementById("contact-form");
   const success = document.getElementById("success-message");
   const submitBtn = document.getElementById("submit-btn");
@@ -119,22 +117,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const message = document.getElementById("message").value;
 
     submitBtn.disabled = true;
-    submitBtn.innerHTML = "Enviando...";
-
-    // setTimeout(() => {
-    //   success.classList.remove("hidden");
-    //   form.reset();
-
-    //   submitBtn.disabled = false;
-    //   submitBtn.innerHTML = '<i data-lucide="send"></i> Enviar Mensagem';
-
-    //   lucide.createIcons();
-
-    //   setTimeout(() => success.classList.add("hidden"), 3000);
-    // }, 1500);
+    submitBtn.innerHTML = '<i data-lucide="loader"></i> Enviando...';
+    lucide.createIcons();
 
     try {
-      const response = await fetch("https://seu-backend.com/api/messages", {
+      const response = await fetch(`${API_BASE_URL}/api/messages`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -142,37 +129,41 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify({ name, email, message }),
       });
 
+      const data = await response.json();
+
       if (response.ok) {
         success.classList.remove("hidden");
         form.reset();
-        submitBtn.innerHTML = '<i data-lucide="send"></i> Enviar Mensagem';
-        lucide.createIcons();
-
+        console.log("Mensagem salva:", data);
         setTimeout(() => success.classList.add("hidden"), 3000);
       } else {
-        alert("Erro ao enviar mensagem. Tente novamente!");
+        alert(data.error || "Erro ao enviar mensagem.");
       }
     } catch (error) {
       console.error("Erro:", error);
-      alert("Erro de conexão. Verifique a URL do backend!");
+      alert("Erro de conexão com o servidor.");
     } finally {
       submitBtn.disabled = false;
+      submitBtn.innerHTML = '<i data-lucide="send"></i> Enviar Mensagem';
+      lucide.createIcons();
     }
   });
 
   // VIEW COUNTER
-  function updateViewCounter() {
-    // Usamos o seu nome de usuário do GitHub para criar uma chave única para o contador.
-    const namespace = "d-shebarro-portfolio";
-    const key = "site-views";
-    const counterElement = document.getElementById("view-counter");
+  // function updateViewCounter() {
+  //   const namespace = "d-shebarro-portfolio";
+  //   const key = "site-views";
+  //   const counterElement = document.getElementById("view-counter");
 
-    fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
-      .then((res) => res.json())
-      .then((data) => {
-        counterElement.textContent = data.value;
-      })
-      .catch(() => (counterElement.textContent = "N/A"));
-  }
-  updateViewCounter();
+  //   fetch(`https://api.simplecounter.co/v1/hit/${namespace}/${key}`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       counterElement.textContent = data.value;
+  //     })
+  //     .catch(() => {
+  //       counterElement.textContent = "N/A";
+  //     });
+  // }
+
+  // updateViewCounter();
 });
