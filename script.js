@@ -1,5 +1,5 @@
 // Em DEV: backend local. Em produção troque pela URL do Render.
-const API_BASE_URL = "http://localhost:5000";
+const API_BASE_URL = "https://portifolio-backend-t5w2.onrender.com/";
 // ex. produção: const API_BASE_URL = "https://seu-backend.onrender.com";
 
 document.addEventListener("DOMContentLoaded", () => {
