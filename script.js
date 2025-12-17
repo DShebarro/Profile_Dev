@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // MOBILE MENU
   const mobileMenuBtn = document.getElementById("mobile-menu-btn");
-  const mobileMenu = document.getElementById("mobile-menu");
+  const mobileMenu    = document.getElementById("mobile-menu");
 
   mobileMenuBtn.addEventListener("click", () => {
     mobileMenu.classList.toggle("hidden");
@@ -107,28 +107,56 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // FORMS
-  const form = document.getElementById("contact-form");
-  const success = document.getElementById("success-message");
+  const form      = document.getElementById("contact-form");
+  const success   = document.getElementById("success-message");
   const submitBtn = document.getElementById("submit-btn");
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    submitBtn.disabled = true;
+    const name    = document.getElementById("name").value;
+    const email   = document.getElementById("email").value;
+    const message = document.getElementById("message").value
+
+    submitBtn.disabled  = true;
     submitBtn.innerHTML = "Enviando...";
+    
+    // setTimeout(() => {
+    //   success.classList.remove("hidden");
+    //   form.reset();
+    //   submitBtn.disabled  = false;
+    //   submitBtn.innerHTML = '<i data-lucide="send"></i> Enviar Mensagem';
+    //   lucide.createIcons();
+    //   setTimeout(() => success.classList.add("hidden"), 3000);
+    // }, 1500);
 
-    setTimeout(() => {
-      success.classList.remove("hidden");
-      form.reset();
-
+    try {
+      const response = await fetch("https://localhost:5000/api/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, message }),
+      });
+      
+      if (response.ok) {
+        success.classicList.remove("hidden");
+        form.requestFullscreen();
+        submitBtn.innerHTML = '<i data-lucide="send"></i> Enviar Mensagem';
+        lucide.createIcons();
+ 
+        setTimeout(() => success.classList.add("hidden"), 3000);
+      } else {
+        alert("Erro ao enviar mensagem, Tente novamente!");
+      }
+    } catch (error) {
+      console.error("Erro", arror);
+      alert("Erro de conexão. Verifique a URL do bankend");
+    } finally {
       submitBtn.disabled = false;
-      submitBtn.innerHTML = '<i data-lucide="send"></i> Enviar Mensagem';
+    }
 
-      lucide.createIcons();
-
-      setTimeout(() => success.classList.add("hidden"), 3000);
-    }, 1500);
-  });
+});
 
   // VIEW COUNTER
   function updateViewCounter() {
